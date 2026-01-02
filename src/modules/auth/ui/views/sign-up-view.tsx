@@ -92,7 +92,7 @@ export const SignUpView=()=>{
                             <FormDescription
                             className={cn("hidden",showPreview &&"block")}
                             >
-                                Your store will be availabe at&nbsp;
+                                Your store will be available at&nbsp;
                                 <strong>{username}</strong>.shop.com
                             </FormDescription>
                             <FormMessage/>
@@ -103,7 +103,7 @@ export const SignUpView=()=>{
                         name="email"
                         render={({field})=> (
                             <FormItem>
-                            <FormLabel className="text-base">email</FormLabel>
+                            <FormLabel className="text-base">Email</FormLabel>
                             <FormControl>
                                 <Input {...field}/>
                             </FormControl>
@@ -116,7 +116,7 @@ export const SignUpView=()=>{
                         name="password"
                         render={({field})=> (
                             <FormItem>
-                            <FormLabel className="text-base">password</FormLabel>
+                            <FormLabel className="text-base">Password</FormLabel>
                             <FormControl>
                                 <Input {...field} type="password"/>
                             </FormControl>
