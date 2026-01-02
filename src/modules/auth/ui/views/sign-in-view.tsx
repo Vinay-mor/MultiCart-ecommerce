@@ -94,7 +94,7 @@ export const SignInView=()=>{
                         name="password"
                         render={({field})=> (
                             <FormItem>
-                            <FormLabel className="text-base">password</FormLabel>
+                            <FormLabel className="text-base">Password</FormLabel>
                             <FormControl>
                                 <Input {...field} type="password"/>
                             </FormControl>
