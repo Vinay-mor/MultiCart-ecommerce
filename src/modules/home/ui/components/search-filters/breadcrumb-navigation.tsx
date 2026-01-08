@@ -32,17 +32,17 @@ export const BreadcrumbNavigation = ({
                             /
                         </BreadcrumbSeparator>
                         <BreadcrumbItem>
-                            <BreadcrumbPage  className="text-xl font-medium \">
+                            <BreadcrumbPage className="text-xl font-medium">
                                 {activeSubcategoryName}
                             </BreadcrumbPage>
                         </BreadcrumbItem>
                     </>
-                ):(
+                ) : (
                     <BreadcrumbItem>
-                            <BreadcrumbPage  className="text-xl font-medium \">
-                                {activeCategoryName}
-                            </BreadcrumbPage>
-                        </BreadcrumbItem>
+                        <BreadcrumbPage className="text-xl font-medium ">
+                            {activeCategoryName}
+                        </BreadcrumbPage>
+                    </BreadcrumbItem>
                 )}
             </BreadcrumbList>
         </Breadcrumb>
