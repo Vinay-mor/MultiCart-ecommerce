@@ -41,9 +41,6 @@ export const SearchInput= ({disabled,}:Props) => {
                     </Link>
                 </Button>
             )}
-        {/* TODO:Add category view all button */}
-        {/*TODO: Add library button */}
-
         </div>
         );
 }
