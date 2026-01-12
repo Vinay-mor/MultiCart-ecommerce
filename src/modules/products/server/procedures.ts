@@ -1,7 +1,7 @@
 import z from "zod";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
-import { Category } from "@/payload-types";
+import { Category, Media } from "@/payload-types";
 import { sortValues } from "../search-params";
 export const productsRouter = createTRPCRouter({
     getMany: baseProcedure
@@ -20,11 +20,11 @@ export const productsRouter = createTRPCRouter({
             if (input.sort === "curated") {
                 sort = "-createdAt";
             }
-            if(input.sort==="hot_and_new"){
-                sort="name";
+            if (input.sort === "hot_and_new") {
+                sort = "name";
             }
-            if(input.sort==="trending"){
-                sort="+createdAt"
+            if (input.sort === "trending") {
+                sort = "+createdAt"
             }
             if (input.minPrice && input.maxPrice) {
                 where.price = {
@@ -86,6 +86,12 @@ export const productsRouter = createTRPCRouter({
                 sort,
             });
 
-            return data;
+            return {
+                ...data,
+                docs: data.docs.map((doc) => ({
+                    ...doc,
+                    image: doc.image as Media | null
+                }))
+            }
         }),
 });
