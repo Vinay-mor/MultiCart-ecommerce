@@ -1,5 +1,5 @@
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import { headers as getHeaders} from "next/headers";
+import { headers as getHeaders } from "next/headers";
 import { TRPCError } from "@trpc/server";
 import { loginSchema, registerSchema } from "../schemas";
 import { generateAuthCookie } from "../utils";
@@ -33,15 +33,30 @@ export const authRouter = createTRPCRouter({
           message: "Username already taken",
         })
       }
+
+      const tenant = await ctx.db.create({
+        collection: "tenants",
+        data: {
+          name: input.username,
+          slug: input.username,
+          stripeAccountId: "test",
+        }
+      })
+
       await ctx.db.create({
         collection: "users",
         data: {
           email: input.email,
           username: input.username,
           password: input.password,//This will be hashed
+          tenants: [
+            {
+              tenant: tenant.id,
+            }
+          ]
+
         },
       });
-
 
       const data = await ctx.db.login({
         collection: "users",
@@ -57,7 +72,7 @@ export const authRouter = createTRPCRouter({
         })
       }
       await generateAuthCookie({
-        prefix:ctx.db.config.cookiePrefix,
+        prefix: ctx.db.config.cookiePrefix,
         value: data.token,
       });
     }),
@@ -80,7 +95,7 @@ export const authRouter = createTRPCRouter({
         })
       }
       await generateAuthCookie({
-        prefix:ctx.db.config.cookiePrefix,
+        prefix: ctx.db.config.cookiePrefix,
         value: data.token,
       });
       return data;
