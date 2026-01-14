@@ -5,21 +5,19 @@ import  Link  from "next/link";
 interface Props {
     category: CategoriesGetManyOutput[1];
     isOpen: boolean;
-    postion: { top: number; left: number };
 }
 export const SubcategoryMenu = ({
     category,
     isOpen,
-    postion,
 }: Props) => {
     if (!isOpen || !category.subcategories || category.subcategories.length === 0) { return null; }
     const backgroundColor = category.color || "F5F5F5";
     return (
         <div
-            className="fixed z-100"
+            className="absolute z-100"
             style={{
-                top: postion.top,
-                left: postion.left,
+                top:"100%",
+                left: 0,
             }}>
             <div className="h-3 w-60" />
             <div
