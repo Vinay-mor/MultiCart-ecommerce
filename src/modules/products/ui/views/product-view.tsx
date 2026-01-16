@@ -19,7 +19,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
     return (
         <div className="px-4 lg:px-12 py-10">
-            <div className=" border roundered-sm bg-white overflow-hidden">
+            <div className=" border rounded-sm bg-white overflow-hidden">
                 <div className="relative aspect-[3.9] border-b">
                     <Image
                         src={data.image?.url || "/placeholder.png"}
@@ -66,7 +66,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                             </div>
                         </div>
                         <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
-                            <div className="flex-items-center gap-1">
+                            <div className="flex items-center gap-1">
                                 <StarRating
                                     rating={3}
                                     iconClassName="size-4"
