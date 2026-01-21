@@ -66,7 +66,7 @@ export const SignUpView = () => {
                         <div className="flex items-center justify-between mb-8">
                             <Link href="/">
                                 <span className={cn("text-2xl font-semibold", poppins.className)}>
-                                    funroad
+                                    MultiCart
                                 </span>
                             </Link>
                             <Button
@@ -81,7 +81,7 @@ export const SignUpView = () => {
                             </Button>
                         </div>
                         <h1 className="text-4xl font-medium">
-                            Join over 1000 creators earning money on Funroad.
+                            Join over 1000 creators earning money on MultiCart.
                         </h1>
                         <FormField
                             name="username"

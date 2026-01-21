@@ -13,7 +13,7 @@ export const Footer=()=>{
             <p >Powered by</p>
             <Link href="/">
             <span className={cn("text-2xl font-semibold",poppins.className)}>
-                funroad
+                MultiCart
             </span>
             </Link>
             </div>
