@@ -56,7 +56,7 @@ export const useCartStore = create<CartState>()(
                 get().tenantCarts[tenantSlug]?.productIds || [],
         }),
         {
-            name: "funroad-cart",
+            name: "MultiCart-cart",
             storage: createJSONStorage(() => localStorage),
         }
     )
