@@ -14,9 +14,10 @@ interface ProductCardProps {
     reviewRating: number;
     reviewCount: number;
     price: number;
+    priority?: boolean;
 };
 export const ProductCard = ({
-    id, name, imageUrl, tenantSlug, tenantImageUrl, reviewRating, reviewCount, price,
+    id, name, imageUrl, tenantSlug, tenantImageUrl, reviewRating, reviewCount, price, priority,
 }: ProductCardProps) => {
     const router=useRouter();
     const handleUserClick=(e:React.MouseEvent<HTMLDivElement>)=>{
@@ -32,8 +33,10 @@ export const ProductCard = ({
                     <Image
                         alt={name}
                         fill
+                        priority={priority}
                         src={imageUrl || "/placeholder.png"}
                         className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </div>
                 <div className="p-4 border-y flex flex-col gap-3 flex-1">

@@ -33,7 +33,9 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                         src={data.image?.url || "/placeholder.png"}
                         alt={data.name}
                         fill
+                        priority
                         className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 80vw"
                     />
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-6">

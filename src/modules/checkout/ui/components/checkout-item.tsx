@@ -11,6 +11,7 @@ interface CheckoutItemProps {
     tenantName: string;
     price: number;
     onRemove: () => void;
+    priority?: boolean;
 };
 
 export const CheckoutItem = ({
@@ -22,6 +23,7 @@ export const CheckoutItem = ({
     tenantName,
     price,
     onRemove,
+    priority,
 }: CheckoutItemProps) => {
 
     return (
@@ -35,9 +37,11 @@ export const CheckoutItem = ({
                 <div className="relative aspect-square h-full">
                     <Image
                         src={imageUrl || "/placeholder.png"}
+                        priority={priority}
                         alt={name}
                         fill
                         className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 200px"
                     />
                 </div>
             </div>

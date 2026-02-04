@@ -8,26 +8,47 @@ import { generateTenantURL } from "@/lib/utils";
 import { CheckoutItem } from "../components/checkout-item";
 import { CheckoutSidebar } from "../components/checkout-sidebar";
 import { InboxIcon, LoaderIcon } from "lucide-react";
+import { useCheckoutStates } from "../../hooks/use-checkout-states";
+import { useRouter } from "next/navigation";
 
 interface CheckoutViewProps {
     tenantSlug: string;
 }
 export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
-    const { productIds, removeProduct, clearAllCarts } = useCart(tenantSlug);
+    const router = useRouter();
+    const [states, setStates] = useCheckoutStates();
+    const { productIds, removeProduct, clearCart } = useCart(tenantSlug);
     const trpc = useTRPC();
     const { data, error, isLoading } = useQuery(trpc.checkout.getProducts.queryOptions({
         ids: productIds,
     }))
     const purchase = useMutation(trpc.checkout.purchase.mutationOptions({
-        onSuccess:()=>{},
-        onError:()=>{},
+        onMutate: () => {
+            setStates({ success: false, cancel: false })
+        },
+        onSuccess: (data) => {
+            router.push(data.url);
+        },
+        onError: (error) => {
+            if (error.data?.code === "UNAUTHORIZED") {
+                router.push("/sign-in")
+            }
+            toast.error(error.message);
+        },
     }));
     useEffect(() => {
+        if (states.success) {
+            setStates({success:false,cancel:false})
+            clearCart();
+            router.push("/products")
+        }
+    }, [states.success, clearCart, router,setStates])
+    useEffect(() => {
         if (error?.data?.code === "NOT_FOUND") {
-            clearAllCarts();
+            clearCart();
             toast.warning("Invalid product found,cart cleared");
         }
-    }, [error, clearAllCarts])
+    }, [error, clearCart])
     if (isLoading) {
         return (
             <div className="lg:pt-16 pt-4 px-4 lg:px-12">
@@ -55,6 +76,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                         {data?.docs?.map((product, index) => (
                             <CheckoutItem
                                 key={product.id}
+                                priority={index === 0}
                                 isLast={index === data.docs.length - 1}
                                 imageUrl={product.image?.url}
                                 name={product.name}
@@ -70,8 +92,8 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                 <div className="lg:col-span-3">
                     <CheckoutSidebar
                         total={data?.totalPrice || 0}
-                        onPurchase={() => purchase.mutate({tenantSlug, productIds})}
-                        isCanceled={false}
+                        onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
+                        isCanceled={states.cancel}
                         disabled={purchase.isPending}
                     />
                 </div>

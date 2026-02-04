@@ -79,7 +79,7 @@ export const checkoutRouter = createTRPCRouter({
                     enabled:true,
                 },
                 metadata:{
-                    userID:ctx.session.user.id,
+                    userId:ctx.session.user.id,
                 } as CheckoutMetaData
             });
             if(!checkout.url){
