@@ -5,6 +5,7 @@ import type { Sort, Where } from "payload";
 import { Category, Media, Tenant } from "@/payload-types";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
+import { summarizeReviews } from "@/modules/reviews/utils";
 export const productsRouter = createTRPCRouter({
     getOne: baseProcedure
         .input(
@@ -182,27 +183,7 @@ export const productsRouter = createTRPCRouter({
                 limit: input.limit,
             });
 
-            const dataWithSummarizedReviews = await Promise.all(
-                data.docs.map(async (doc) => {
-                    const reviewsData = await ctx.db.find({
-                        collection: "reviews",
-                        pagination: false,
-                        where: {
-                            product: {
-                                equals: doc.id,
-                            }
-                        }
-                    })
-                    return {
-                        ...doc,
-                        reviewCount: reviewsData.totalDocs,
-                        reviewRating:
-                            reviewsData.docs.length === 0
-                                ? 0
-                                : reviewsData.docs.reduce((acc, review) => acc + review.rating, 0)/reviewsData.totalDocs
-                    }
-                })
-            )
+            const dataWithSummarizedReviews = await summarizeReviews(data.docs, ctx.db);
             return {
                 ...data,
                 docs: dataWithSummarizedReviews.map((doc) => ({

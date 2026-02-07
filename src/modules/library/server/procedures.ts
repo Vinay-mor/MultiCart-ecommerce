@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import {  Media, Tenant } from "@/payload-types";
 import { DEFAULT_LIMIT } from "@/constants";
 import { TRPCError } from "@trpc/server";
+import { summarizeReviews } from "@/modules/reviews/utils";
 export const libraryRouter = createTRPCRouter({
     getOne: protectedProcedure
         .input(
@@ -79,27 +80,7 @@ export const libraryRouter = createTRPCRouter({
                 }
             })
 
-             const dataWithSummarizedReviews = await Promise.all(
-                productsData.docs.map(async (doc) => {
-                    const reviewsData = await ctx.db.find({
-                        collection: "reviews",
-                        pagination: false,
-                        where: {
-                            product: {
-                                equals: doc.id,
-                            }
-                        }
-                    })
-                    return {
-                        ...doc,
-                        reviewCount: reviewsData.totalDocs,
-                        reviewRating:
-                            reviewsData.docs.length === 0
-                                ? 0
-                                : reviewsData.docs.reduce((acc, review) => acc + review.rating, 0)/reviewsData.totalDocs
-                    }
-                })
-            )
+            const dataWithSummarizedReviews = await summarizeReviews(productsData.docs, ctx.db);
             return {
                 ...productsData,
                 docs: dataWithSummarizedReviews.map((doc) => ({
