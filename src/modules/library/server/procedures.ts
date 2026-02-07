@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import {  Media, Tenant } from "@/payload-types";
 import { DEFAULT_LIMIT } from "@/constants";
 import { TRPCError } from "@trpc/server";
+import { summarizeReviews } from "@/modules/reviews/utils";
 export const libraryRouter = createTRPCRouter({
     getOne: protectedProcedure
         .input(
@@ -78,9 +79,11 @@ export const libraryRouter = createTRPCRouter({
                     }
                 }
             })
+
+            const dataWithSummarizedReviews = await summarizeReviews(productsData.docs, ctx.db);
             return {
                 ...productsData,
-                docs: productsData.docs.map((doc) => ({
+                docs: dataWithSummarizedReviews.map((doc) => ({
                     ...doc,
                     image: doc.image as Media | null,
                     tenant: doc.tenant as Tenant & { image: Media | null },
