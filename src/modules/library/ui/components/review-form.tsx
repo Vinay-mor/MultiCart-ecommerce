@@ -82,7 +82,7 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
             <form
                 className="flex flex-col gap-y-4"
                 onSubmit={form.handleSubmit(onSubmit)}>
-                {isPreview ? "Your rating:" : "Liked it?Give it a rating"}
+                {isPreview ? "Your rating:" : "Liked it? Give it a rating"}
                 <FormField
                     control={form.control}
                     name="rating"
