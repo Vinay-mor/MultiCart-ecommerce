@@ -29,7 +29,7 @@ export const Users: CollectionConfig = {
       if (isSuperAdmin(req.user))
         return true;
 
-      return req.user?.id == id;
+      return req.user?.id === id;
     }
   },
   admin: {
