@@ -43,7 +43,7 @@ export const Orders: CollectionConfig = {
             name: "stripeAccountId",
             type: "text",
             admin:{
-                description:"Stripe account  associated with the order"
+                description:"Stripe account associated with the order"
             }
         },
     ],

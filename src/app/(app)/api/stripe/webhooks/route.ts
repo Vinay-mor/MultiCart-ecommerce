@@ -51,7 +51,7 @@ export async function POST(req: Request) {
                             expand: ["line_items.data.price.product"],
                         },
                         {
-                            stripeAccount:event.account,
+                            stripeAccount: event.account,
                         },
                     );
                     if (
@@ -67,25 +67,25 @@ export async function POST(req: Request) {
                             data: {
                                 stripeCheckoutSessionId: data.id,
                                 user: user.id,
-                                stripeAccountId:event.account,
+                                stripeAccountId: event.account,
                                 product: item.price.product.metadata.id,
                                 name: item.price.product.name,
                             }
                         })
                     }
                     break;
-                    case"account.updated":
-                    data=event.data.object as Stripe.Account;
+                case "account.updated":
+                    data = event.data.object as Stripe.Account;
 
                     await payload.update({
-                        collection:"tenants",
-                        where:{
-                            stripeAccountId:{
+                        collection: "tenants",
+                        where: {
+                            stripeAccountId: {
                                 equals: data.id,
                             },
                         },
-                        data:{
-                            stripeDetailsSubmitted:data.details_submitted,
+                        data: {
+                            stripeDetailsSubmitted: data.details_submitted,
                         },
                     });
                     break;

@@ -135,11 +135,11 @@ export const checkoutRouter = createTRPCRouter({
                 metadata: {
                     userId: ctx.session.user.id,
                 } as CheckoutMetaData,
-                payment_intent_data:{
-                    application_fee_amount:PlatformFeeAmount,
+                payment_intent_data: {
+                    application_fee_amount: PlatformFeeAmount,
                 }
-            },{
-                stripeAccount:tenant.stripeAccountId,
+            }, {
+                stripeAccount: tenant.stripeAccountId,
             });
             if (!checkout.url) {
                 throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create checkout session" });
