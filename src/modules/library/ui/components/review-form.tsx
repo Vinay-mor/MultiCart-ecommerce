@@ -39,17 +39,17 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
             }))
             setIsPreview(true);
         },
-        onError: (error) => { 
+        onError: (error) => {
             toast.error(error.message);
         },
     }))
     const updateReview = useMutation(trpc.reviews.update.mutationOptions({
         onSuccess: () => {
-             queryClient.invalidateQueries(trpc.reviews.getOne.queryOptions({
+            queryClient.invalidateQueries(trpc.reviews.getOne.queryOptions({
                 productId,
             }))
             setIsPreview(true);
-         },
+        },
         onError: (error) => {
             toast.error(error.message);
         },
@@ -82,7 +82,9 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
             <form
                 className="flex flex-col gap-y-4"
                 onSubmit={form.handleSubmit(onSubmit)}>
-                {isPreview ? "Your rating:" : "Liked it? Give it a rating"}
+                <p className="font-medium">
+                    {isPreview ? "Your rating:" : "Liked it? Give it a rating"}
+                </p>
                 <FormField
                     control={form.control}
                     name="rating"
@@ -118,7 +120,7 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
                 {!isPreview && (
                     <Button
                         variant="elevated"
-                        disabled={createReview.isPending||updateReview.isPending}
+                        disabled={createReview.isPending || updateReview.isPending}
                         type="submit"
                         size="lg"
                         className="bg-black text-white hover:bg-pink-400 hover:text-primary w-fit"
@@ -139,5 +141,30 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
                 </Button>
             )}
         </Form>
+    )
+}
+export const ReviewFormSkeleton = () => {
+    return (
+        <div className="flex flex-col gap-y-4">
+            <p className="font-medium">
+                Liked it? Give it a rating
+            </p>
+            <StarPicker
+                disabled
+            />
+            <Textarea
+                placeholder="Want to leave a written review?"
+                disabled
+            />
+            <Button
+                variant="elevated"
+                disabled
+                type="button"
+                size="lg"
+                className="bg-black text-white hover:bg-pink-400 hover:text-primary w-fit"
+            >
+                Post review
+            </Button>
+        </div>
     )
 }

@@ -6,6 +6,7 @@ import { Category, Media, Tenant } from "@/payload-types";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
 import { summarizeReviews } from "@/modules/reviews/utils";
+import { TRPCError } from "@trpc/server";
 export const productsRouter = createTRPCRouter({
     getOne: baseProcedure
         .input(
@@ -20,10 +21,16 @@ export const productsRouter = createTRPCRouter({
                 collection: "products",
                 id: input.id,
                 depth: 2,//Load the "product.image","product.tenant",and "product.tenant.image"
-                select:{
-                    content:false,
+                select: {
+                    content: false,
                 },
             });
+            if (product.isArchived) {
+                throw new TRPCError({
+                    code: "NOT_FOUND",
+                    message: "Product not found",
+                })
+            }
             let isPurchased = false;
             if (session.user) {
                 const ordersData = await ctx.db.find({
@@ -47,39 +54,39 @@ export const productsRouter = createTRPCRouter({
                 });
                 isPurchased = !!ordersData.docs[0];
             }
-            const reviews=await ctx.db.find({
-                collection:"reviews",
-                pagination:false,
-                where:{
-                    product:{
-                        equals:input.id
+            const reviews = await ctx.db.find({
+                collection: "reviews",
+                pagination: false,
+                where: {
+                    product: {
+                        equals: input.id
                     }
                 }
             });
-            const reviewRating=
-            reviews.docs.length>0
-            ?reviews.docs.reduce((acc,review)=>acc+review.rating,0)/reviews.totalDocs
-            :0;
+            const reviewRating =
+                reviews.docs.length > 0
+                    ? reviews.docs.reduce((acc, review) => acc + review.rating, 0) / reviews.totalDocs
+                    : 0;
 
-            const ratingDistribution:Record<number,number>={
-                5:0,
-                4:0,
-                3:0,
-                2:0,
-                1:0,
+            const ratingDistribution: Record<number, number> = {
+                5: 0,
+                4: 0,
+                3: 0,
+                2: 0,
+                1: 0,
             };
-            if(reviews.totalDocs>0){
-                reviews.docs.forEach((review)=>{
-                    const rating=review.rating;
-                    if(rating>=1&& rating<=5){
-                        ratingDistribution[rating]=(ratingDistribution[rating]||0)+1;
+            if (reviews.totalDocs > 0) {
+                reviews.docs.forEach((review) => {
+                    const rating = review.rating;
+                    if (rating >= 1 && rating <= 5) {
+                        ratingDistribution[rating] = (ratingDistribution[rating] || 0) + 1;
                     }
                 });
-                Object.keys(ratingDistribution).forEach((key)=>{
-                    const rating=Number(key);
-                    const count=ratingDistribution[rating]||0;
-                    ratingDistribution[rating]=Math.round(
-                        (count/reviews.totalDocs)*100,
+                Object.keys(ratingDistribution).forEach((key) => {
+                    const rating = Number(key);
+                    const count = ratingDistribution[rating] || 0;
+                    ratingDistribution[rating] = Math.round(
+                        (count / reviews.totalDocs) * 100,
                     )
                 })
             }
@@ -90,7 +97,7 @@ export const productsRouter = createTRPCRouter({
                 image: product.image as Media | null,
                 tenant: product.tenant as Tenant & { image: Media | null },
                 reviewRating,
-                reviewCount:reviews.totalDocs,
+                reviewCount: reviews.totalDocs,
                 ratingDistribution,
             }
         }),
@@ -108,7 +115,11 @@ export const productsRouter = createTRPCRouter({
             }),
         )
         .query(async ({ ctx, input }) => {
-            const where: Where = {};
+            const where: Where = {
+                isArchived: {
+                    not_equals: true,
+                },
+            };
             let sort: Sort = "-createdAt";
             if (input.sort === "curated") {
                 sort = "-createdAt";
@@ -137,7 +148,15 @@ export const productsRouter = createTRPCRouter({
                 where["tenant.slug"] = {
                     equals: input.tenantSlug,
                 }
+            } else {
+                //If we are loading products for public storefront (no tenantSlug)
+                //Make sure to not load products set to "isPrivate:true"(using reverse not_equals logic)
+                // These products are exclusively private to the tenant store
+                where["isPrivate"] = {
+                    not_equals: true,
+                }
             }
+
             if (input.category) {
                 const categoriesData = await ctx.db.find({
                     collection: "categories",
@@ -184,8 +203,8 @@ export const productsRouter = createTRPCRouter({
                 sort,
                 page: input.cursor,
                 limit: input.limit,
-                select:{
-                    content:false,
+                select: {
+                    content: false,
                 },
             });
 

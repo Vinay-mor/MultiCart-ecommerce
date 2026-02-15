@@ -1,5 +1,5 @@
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { lexicalEditor, } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -25,11 +25,11 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components:{
-      beforeNavLinks:["./components/stripe-verify#StripeVerify"]
+    components: {
+      beforeNavLinks: ["./components/stripe-verify#StripeVerify"]
     }
   },
-  collections: [Users, Media, Categories, Products, Tags, Tenants,Orders,Reviews],
+  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -42,7 +42,7 @@ export default buildConfig({
   plugins: [
     multiTenantPlugin<Config>({
       collections: {
-        products: {}
+        products: {},
       },
       tenantsArrayField: {
         includeDefaultField: false,
