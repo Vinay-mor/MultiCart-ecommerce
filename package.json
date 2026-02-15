@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "payload generate:types",
+    "generate:map":"payload generate:importmap",
     "db:fresh": "payload migrate:fresh",
     "db:seed": "bun run src/seed.ts",
     "db:reset": "bun run db:fresh && bun run db:seed"
