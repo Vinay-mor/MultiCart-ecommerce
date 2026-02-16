@@ -14,7 +14,7 @@ export const config = {
 
 export default async function middleware(req:NextRequest){
     const url=req.nextUrl;
-    //Extract the hostname(e.g.,"john.multitenant.com"or "john.localhost:3000")
+    //Extract the hostname(e.g.,"john.MultiCart.com"or "john.localhost:3000")
     const hostname=req.headers.get("host")||"";
     const rootDomain=process.env.NEXT_PUBLIC_ROOT_DOMAIN||"";
     if(hostname.endsWith(`.${rootDomain}`)){

@@ -5,7 +5,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 export function generateTenantURL(tenantSlug: string) {
-  if(process.env.NODE_ENV==="development"){
+  const isDevelopment=process.env.NODE_ENV==="development";
+  const isSubdomainRouthingEnabled=Boolean(process.env.NEXT_PUBLIC_ENABLE_SUBDOMAIN_ROUTING!);
+  if(isDevelopment||!isSubdomainRouthingEnabled){
      return `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenantSlug}`;
   }
   const protocol="https";
