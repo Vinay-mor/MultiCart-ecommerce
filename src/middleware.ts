@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 export const config = {
-    mathcher: [
+    matcher: [
         /*
-        *Math all paths except for:
+        *Match all paths except for:
         * 1./api routes
         * 2./_next(Next.js internals)
         * 3./_static (inside/public)
