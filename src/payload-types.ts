@@ -141,11 +141,11 @@ export interface User {
   username: string;
   roles?: ('super-admin' | 'user')[] | null;
   tenants?:
-    | {
-        tenant: string | Tenant;
-        id?: string | null;
-      }[]
-    | null;
+  | {
+    tenant: string | Tenant;
+    id?: string | null;
+  }[]
+  | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -156,12 +156,12 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
+  | {
+    id: string;
+    createdAt?: string | null;
+    expiresAt: string;
+  }[]
+  | null;
   password?: string | null;
 }
 /**
@@ -341,14 +341,14 @@ export interface PayloadKv {
   id: string;
   key: string;
   data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -357,38 +357,38 @@ export interface PayloadKv {
 export interface PayloadLockedDocument {
   id: string;
   document?:
-    | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
-      } | null)
-    | ({
-        relationTo: 'categories';
-        value: string | Category;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: string | Product;
-      } | null)
-    | ({
-        relationTo: 'tags';
-        value: string | Tag;
-      } | null)
-    | ({
-        relationTo: 'tenants';
-        value: string | Tenant;
-      } | null)
-    | ({
-        relationTo: 'orders';
-        value: string | Order;
-      } | null)
-    | ({
-        relationTo: 'reviews';
-        value: string | Review;
-      } | null);
+  | ({
+    relationTo: 'users';
+    value: string | User;
+  } | null)
+  | ({
+    relationTo: 'media';
+    value: string | Media;
+  } | null)
+  | ({
+    relationTo: 'categories';
+    value: string | Category;
+  } | null)
+  | ({
+    relationTo: 'products';
+    value: string | Product;
+  } | null)
+  | ({
+    relationTo: 'tags';
+    value: string | Tag;
+  } | null)
+  | ({
+    relationTo: 'tenants';
+    value: string | Tenant;
+  } | null)
+  | ({
+    relationTo: 'orders';
+    value: string | Order;
+  } | null)
+  | ({
+    relationTo: 'reviews';
+    value: string | Review;
+  } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -409,14 +409,14 @@ export interface PayloadPreference {
   };
   key?: string | null;
   value?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -439,11 +439,11 @@ export interface UsersSelect<T extends boolean = true> {
   username?: T;
   roles?: T;
   tenants?:
-    | T
-    | {
-        tenant?: T;
-        id?: T;
-      };
+  | T
+  | {
+    tenant?: T;
+    id?: T;
+  };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -454,12 +454,12 @@ export interface UsersSelect<T extends boolean = true> {
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+  | T
+  | {
+    id?: T;
+    createdAt?: T;
+    expiresAt?: T;
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -609,5 +609,5 @@ export interface Auth {
 
 
 declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
+  export interface GeneratedTypes extends Config { }
 }
