@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { AnimateIn } from "@/components/animate-in";
 import {
   Rocket,
   Users,
@@ -61,20 +62,20 @@ const Page = () => {
       {/* ═══════ Magazine Hero ═══════ */}
       <section className="relative overflow-hidden bg-black text-white">
         {/* decorative gradient blob */}
-        <div className="pointer-events-none absolute -top-40 right-0 h-[500px] w-[500px] rounded-full bg-pink-500/20 blur-[120px]" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[300px] w-[300px] md:h-[500px] md:w-[500px] rounded-full bg-pink-500/20 blur-[120px] animate-blob" />
 
         <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-28 text-center md:py-36">
-          <span className="inline-block rounded-full border border-white/20 px-4 py-1 text-xs uppercase tracking-widest text-white/70">
+          <span className="hero-animate hero-animate-1 inline-block rounded-full border border-white/20 px-4 py-1 text-xs uppercase tracking-widest text-white/70">
             Our Story
           </span>
 
-          <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="hero-animate hero-animate-2 max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
             We believe every seller
             <br />
             deserves a <span className="text-pink-400">storefront</span>.
           </h1>
 
-          <p className="max-w-xl text-lg leading-relaxed text-white/70">
+          <p className="hero-animate hero-animate-3 max-w-xl text-lg leading-relaxed text-white/70">
             MultiCart is the multi-tenant marketplace that turns anyone into an
             online entrepreneur — no code, no hassle, just your products and
             your brand.
@@ -85,7 +86,7 @@ const Page = () => {
       {/* ═══════ Editorial Text Block ═══════ */}
       <section className="mx-auto max-w-3xl px-6 py-20 md:py-28">
         <div className="grid gap-10 md:grid-cols-2 md:gap-16">
-          <div>
+          <AnimateIn animation="fade-right" delay={0}>
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-500">
               The Problem
             </h2>
@@ -94,8 +95,8 @@ const Page = () => {
               configuring payment gateways, and managing servers. Most small
               sellers simply couldn&apos;t afford it.
             </p>
-          </div>
-          <div>
+          </AnimateIn>
+          <AnimateIn animation="fade-left" delay={150}>
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-500">
               Our Answer
             </h2>
@@ -104,16 +105,18 @@ const Page = () => {
               shared marketplace. You bring the products — we handle the
               technology, payments, and discovery.
             </p>
-          </div>
+          </AnimateIn>
         </div>
       </section>
 
       {/* ═══════ Vertical Timeline ═══════ */}
       <section className="bg-white py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="mb-16 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Our Journey
-          </h2>
+          <AnimateIn animation="fade-up" className="mb-16 text-center">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+              Our Journey
+            </h2>
+          </AnimateIn>
 
           <div className="relative">
             {/* vertical line */}
@@ -125,8 +128,10 @@ const Page = () => {
                 const isEven = i % 2 === 0;
 
                 return (
-                  <div
+                  <AnimateIn
                     key={item.year}
+                    animation="fade-up"
+                    delay={i * 100}
                     className="relative flex flex-col gap-4 md:flex-row md:items-start"
                   >
                     {/* left / right placement */}
@@ -179,7 +184,7 @@ const Page = () => {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </AnimateIn>
                 );
               })}
             </div>
@@ -189,6 +194,7 @@ const Page = () => {
 
       {/* ═══════ Pull Quote ═══════ */}
       <section className="bg-[#F4F4F0] py-20 md:py-28">
+        <AnimateIn animation="scale-in">
         <blockquote className="mx-auto max-w-2xl px-6 text-center">
           <Users className="mx-auto mb-6 size-10 text-pink-400" />
           <p className="text-2xl font-medium italic leading-relaxed md:text-3xl">
@@ -199,11 +205,12 @@ const Page = () => {
             — The MultiCart Team
           </footer>
         </blockquote>
+        </AnimateIn>
       </section>
 
       {/* ═══════ CTA ═══════ */}
       <section className="bg-black py-20 text-center text-white md:py-28">
-        <div className="mx-auto max-w-xl space-y-6 px-6">
+        <AnimateIn className="mx-auto max-w-xl space-y-6 px-6" animation="fade-up">
           <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
             Start your store today
           </h2>
@@ -228,7 +235,7 @@ const Page = () => {
               <Link href="/contact">Contact Us</Link>
             </Button>
           </div>
-        </div>
+        </AnimateIn>
       </section>
     </div>
   );
