@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "payload generate:types",
-    "generate:map":"payload generate:importmap",
+    "generate:map": "payload generate:importmap",
     "db:fresh": "payload migrate:fresh",
     "db:seed": "bun run src/seed.ts",
     "db:reset": "bun run db:fresh && bun run db:seed"
@@ -20,6 +20,7 @@
     "@payloadcms/next": "^3.68.5",
     "@payloadcms/plugin-multi-tenant": "3.68.5",
     "@payloadcms/richtext-lexical": "^3.68.5",
+    "@payloadcms/storage-vercel-blob": "3.68.5",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.8",
