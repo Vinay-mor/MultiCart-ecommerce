@@ -62,11 +62,11 @@ export const NavbarSidebar=({items,open,onOpenChange}:Props)=>{
                     </>
                 ) : (
                     <>
-                        <Link href="/sign-in" className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
+                        <Link perfect href="/sign-in" className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
                         onClick={()=>onOpenChange(false)}>
                             Log-in
                         </Link>
-                        <Link href="/sign-up" className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
+                        <Link  perfect href="/sign-up" className="w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium"
                         onClick={()=>onOpenChange(false)}>
                             Start selling
                         </Link>
