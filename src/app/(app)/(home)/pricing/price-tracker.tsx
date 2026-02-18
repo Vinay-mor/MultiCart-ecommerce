@@ -24,6 +24,7 @@ import {
   Search,
   TrendingUp,
   TrendingDown,
+  Minus,
   ArrowDown,
   ArrowUp,
   Clock,
@@ -707,13 +708,17 @@ export function PriceTracker() {
               {chartData.canPredict && (
                 <div className="border-t border-black/10 bg-[#FAFAFA] px-6 py-5">
                   <div className="flex items-start gap-3">
-                    {chartData.stats.predictedChange <= 0 ? (
+                    {chartData.stats.predictedChange < 0 ? (
                       <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-green-100">
                         <TrendingDown className="size-4 text-green-600" />
                       </div>
-                    ) : (
+                    ) : chartData.stats.predictedChange > 0 ? (
                       <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-red-100">
                         <TrendingUp className="size-4 text-red-600" />
+                      </div>
+                    ) : (
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-100">
+                        <Minus className="size-4 text-gray-500" />
                       </div>
                     )}
                     <div>
