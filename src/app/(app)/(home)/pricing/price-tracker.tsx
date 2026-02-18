@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { formatCurrency } from "@/lib/utils";
@@ -78,6 +78,17 @@ function generatePrediction(
 ): { date: string; predicted: number; upper: number; lower: number }[] {
   const recent = history.slice(-6);
   const n = recent.length;
+  const lastPrice = history[history.length - 1]!.price;
+
+  // Guard: need at least 2 points for a meaningful regression
+  if (n < 2) {
+    const now = new Date();
+    return Array.from({ length: 3 }, (_, i) => {
+      const date = new Date(now.getFullYear(), now.getMonth() + i + 1, 1);
+      const monthLabel = date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+      return { date: monthLabel, predicted: lastPrice, upper: lastPrice, lower: lastPrice };
+    });
+  }
 
   // Linear regression
   let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
@@ -87,10 +98,29 @@ function generatePrediction(
     sumXY += i * recent[i]!.price;
     sumX2 += i * i;
   }
-  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+
+  const denom = n * sumX2 - sumX * sumX;
+
+  // Guard: degenerate case (all x values identical) – flat prediction
+  if (denom === 0) {
+    const avg = sumY / n;
+    const now = new Date();
+    return Array.from({ length: 3 }, (_, i) => {
+      const date = new Date(now.getFullYear(), now.getMonth() + i + 1, 1);
+      const monthLabel = date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+      const confidence = lastPrice * 0.08 * (i + 1);
+      return {
+        date: monthLabel,
+        predicted: Math.round(avg),
+        upper: Math.round(avg + confidence),
+        lower: Math.max(0, Math.round(avg - confidence)),
+      };
+    });
+  }
+
+  const slope = (n * sumXY - sumX * sumY) / denom;
   const intercept = (sumY - slope * sumX) / n;
 
-  const lastPrice = history[history.length - 1]!.price;
   const now = new Date();
   const predictions: {
     date: string;
@@ -165,6 +195,14 @@ export function PriceTracker() {
   const [showResults, setShowResults] = useState(false);
 
   const trpc = useTRPC();
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Clear debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    };
+  }, []);
 
   // Debounced search
   const handleSearchChange = useCallback(
@@ -172,11 +210,12 @@ export function PriceTracker() {
       setSearch(value);
       setShowResults(true);
 
-      // Simple debounce
-      const timeout = setTimeout(() => {
+      // Cancel any pending debounce
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+      searchTimeoutRef.current = setTimeout(() => {
         setDebouncedSearch(value);
+        searchTimeoutRef.current = null;
       }, 300);
-      return () => clearTimeout(timeout);
     },
     []
   );
@@ -441,12 +480,12 @@ export function PriceTracker() {
               {/* Stats Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-6">
                 <StatCard
-                  label="3M High"
+                  label="High"
                   value={formatCurrency(chartData.stats.highest)}
                   icon={<ArrowUp className="size-4 text-red-500" />}
                 />
                 <StatCard
-                  label="3M Low"
+                  label="Low"
                   value={formatCurrency(chartData.stats.lowest)}
                   icon={<ArrowDown className="size-4 text-green-500" />}
                 />

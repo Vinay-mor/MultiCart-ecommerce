@@ -5,7 +5,7 @@ import { PriceTracker } from "./price-tracker";
 export const metadata: Metadata = {
   title: "Price Tracker | MultiCart",
   description:
-    "Track price history and get AI-powered price predictions for any product on MultiCart.",
+    "Track price history and get trend-based price predictions for any product on MultiCart.",
 };
 
 const Page = () => {
@@ -29,7 +29,7 @@ const Page = () => {
 
           <p className="hero-animate hero-animate-3 max-w-xl text-lg leading-relaxed text-white/70">
             Search any product to see its complete price history and our
-            AI-powered prediction for where the price is headed next.
+            trend-based prediction for where the price is headed next.
           </p>
         </div>
       </section>
