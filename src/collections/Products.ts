@@ -4,6 +4,46 @@ import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
     slug: "products",
+    hooks: {
+        afterChange: [
+            async ({ doc, previousDoc, req, operation }) => {
+                const payload = req.payload;
+
+                if (operation === "create") {
+                    // Record initial price
+                    await payload.create({
+                        collection: "priceHistory",
+                        data: {
+                            product: doc.id,
+                            price: doc.price,
+                            previousPrice: null,
+                            changeType: "initial",
+                            recordedAt: new Date().toISOString(),
+                        },
+                    });
+                } else if (operation === "update" && previousDoc?.price !== doc.price) {
+                    // Record price change
+                    const changeType =
+                        doc.price > previousDoc.price
+                            ? "increase"
+                            : doc.price < previousDoc.price
+                            ? "decrease"
+                            : "no-change";
+
+                    await payload.create({
+                        collection: "priceHistory",
+                        data: {
+                            product: doc.id,
+                            price: doc.price,
+                            previousPrice: previousDoc.price,
+                            changeType,
+                            recordedAt: new Date().toISOString(),
+                        },
+                    });
+                }
+            },
+        ],
+    },
     access: {
         create: ({ req }) => {
             if (isSuperAdmin(req.user)) return true;

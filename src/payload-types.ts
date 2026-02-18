@@ -75,6 +75,7 @@ export interface Config {
     tenants: Tenant;
     orders: Order;
     reviews: Review;
+    priceHistory: PriceHistory;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    priceHistory: PriceHistorySelect<false> | PriceHistorySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -335,6 +337,31 @@ export interface Review {
   createdAt: string;
 }
 /**
+ * Tracks historical price changes for products
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "priceHistory".
+ */
+export interface PriceHistory {
+  id: string;
+  product: string | Product;
+  /**
+   * The price at this point in time (INR)
+   */
+  price: number;
+  /**
+   * The price before this change (INR)
+   */
+  previousPrice?: number | null;
+  changeType?: ('initial' | 'increase' | 'decrease' | 'no-change') | null;
+  /**
+   * When this price was recorded
+   */
+  recordedAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -389,6 +416,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'reviews';
         value: string | Review;
+      } | null)
+    | ({
+        relationTo: 'priceHistory';
+        value: string | PriceHistory;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -558,6 +589,19 @@ export interface ReviewsSelect<T extends boolean = true> {
   rating?: T;
   product?: T;
   user?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "priceHistory_select".
+ */
+export interface PriceHistorySelect<T extends boolean = true> {
+  product?: T;
+  price?: T;
+  previousPrice?: T;
+  changeType?: T;
+  recordedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

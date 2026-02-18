@@ -16,6 +16,7 @@ import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import { Config } from "./payload-types";
 import { Orders } from "./collections/Orders";
 import { Reviews } from "./collections/Reviews";
+import { PriceHistory } from "./collections/PriceHistory";
 import { isSuperAdmin } from "./lib/access";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -30,7 +31,7 @@ export default buildConfig({
       beforeNavLinks: ["./components/stripe-verify#StripeVerify"]
     }
   },
-  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews],
+  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews, PriceHistory],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
