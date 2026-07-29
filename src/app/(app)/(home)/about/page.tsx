@@ -3,242 +3,176 @@ import { Button } from "@/components/ui/button";
 import { AnimateIn } from "@/components/animate-in";
 import {
   Rocket,
-  Users,
   ShieldCheck,
   TrendingUp,
   Globe,
   Zap,
+  Sparkles,
 } from "lucide-react";
 
 export const metadata = {
-  title: "About | MultiCart",
+  title: "Our Vision | MultiCart Atelier",
   description:
-    "Learn about MultiCart — the multi-tenant marketplace empowering sellers and connecting buyers.",
+    "Discover the philosophy behind MultiCart — an editorial multi-tenant marketplace designed for digital artisans and modern visionaries.",
 };
 
-/* ────────────────────── timeline data ────────────────────── */
 const timeline = [
   {
-    year: "The Idea",
-    title: "A marketplace for everyone",
+    year: "The Vision",
+    title: "A Canvas for Digital Artisans",
     description:
-      "We noticed small sellers struggled to get online. Building a website, integrating payments, handling logistics — it was too much. MultiCart was born to change that.",
+      "We observed independent creators struggling with fragmented e-commerce tools. MultiCart was conceived to unify high-end design with effortless merchant infrastructure.",
     icon: Rocket,
   },
   {
-    year: "Building",
-    title: "Multi-tenant architecture",
+    year: "Architecture",
+    title: "Editorial Multi-Tenant Engine",
     description:
-      "We engineered a single platform where every seller gets their own branded storefront — complete with custom domains, product catalogs, and analytics — without writing a single line of code.",
+      "We engineered a shared platform where every tenant operates a distinct, luxury digital storefront — complete with custom domain isolation, inventory control, and instant global delivery.",
     icon: Zap,
   },
   {
-    year: "Growing",
-    title: "Community-first growth",
+    year: "Excellence",
+    title: "Curated Merchant Network",
     description:
-      "Sellers joined, buyers discovered unique products, and the marketplace grew organically. Reviews, wishlists, and category browsing made discovery effortless.",
+      "Artisans and visionaries joined the ecosystem, offering products defined by quality and design integrity. Discovery became an experience rather than a search.",
     icon: TrendingUp,
   },
   {
-    year: "Today",
-    title: "Trusted by sellers everywhere",
+    year: "Trust",
+    title: "Enterprise Grade Security",
     description:
-      "MultiCart is a thriving ecosystem with secure Stripe payments, real-time order tracking, and a seller dashboard that puts you in full control of your business.",
+      "MultiCart combines Stripe-backed payment routing, real-time analytics, and automated order fulfillment to ensure absolute operational peace of mind.",
     icon: ShieldCheck,
   },
   {
-    year: "Tomorrow",
-    title: "The future is open",
+    year: "Horizon",
+    title: "Global Commerce Atelier",
     description:
-      "We're expanding into new categories, adding AI-powered recommendations, and building tools that make selling online as easy as posting a photo.",
+      "Expanding into international fashion capitals with sub-second regional rendering and AI-powered aesthetic curation.",
     icon: Globe,
   },
 ];
 
-/* ────────────────────────── page ────────────────────────── */
 const Page = () => {
   return (
-    <div className="space-y-0">
-      {/* ═══════ Magazine Hero ═══════ */}
-      <section className="relative overflow-hidden bg-black text-white">
-        {/* decorative gradient blob */}
-        <div className="pointer-events-none absolute -top-40 right-0 h-[300px] w-[300px] md:h-[500px] md:w-[500px] rounded-full bg-pink-500/20 blur-[120px] animate-blob" />
-
-        <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-28 text-center md:py-36">
-          <span className="hero-animate hero-animate-1 inline-block rounded-full border border-white/20 px-4 py-1 text-xs uppercase tracking-widest text-white/70">
-            Our Story
+    <div className="w-full bg-[#f9f9f7] dark:bg-[#141413] text-[#1a1c1b] dark:text-[#f9f9f7] transition-colors">
+      {/* ═══════ Luxury Editorial Hero ═══════ */}
+      <section className="relative overflow-hidden bg-[#141413] text-[#f9f9f7] py-28 lg:py-36 border-b border-[#333330]">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 relative z-10 flex flex-col items-center text-center">
+          <span className="inline-block text-xs uppercase tracking-[0.3em] text-[#e9c176] font-serif font-semibold mb-6 px-4 py-1 bg-[#47360f]/60 rounded-full border border-[#e9c176]/30">
+            Our Vision & Process
           </span>
 
-          <h1 className="hero-animate hero-animate-2 max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
-            We believe every seller
-            <br />
-            deserves a <span className="text-pink-400">storefront</span>.
+          <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold max-w-4xl leading-[1.1] tracking-tight mb-8">
+            Empowering the World&apos;s Most <br />
+            <span className="italic font-normal text-[#e9c176]">Discerning</span> Merchants.
           </h1>
 
-          <p className="hero-animate hero-animate-3 max-w-xl text-lg leading-relaxed text-white/70">
-            MultiCart is the multi-tenant marketplace that turns anyone into an
-            online entrepreneur — no code, no hassle, just your products and
-            your brand.
+          <p className="text-base sm:text-xl text-[#cec6b5]/80 max-w-2xl font-light leading-relaxed mb-10">
+            MultiCart provides the digital canvas for independent creators, emerging ateliers, and visionary brands to showcase their craft on a global stage.
           </p>
+
+          <div className="flex items-center gap-4">
+            <Button
+              asChild
+              className="satin-gradient text-white px-8 py-3.5 rounded-xs font-serif text-xs uppercase tracking-widest font-semibold hover:brightness-110 shadow-md transition-all"
+            >
+              <Link href="/sign-up">Start Selling</Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="border-[#4e4639] bg-transparent text-[#f9f9f7] hover:bg-[#333330] px-8 py-3.5 rounded-xs font-serif text-xs uppercase tracking-widest font-semibold"
+            >
+              <Link href="/features">Explore Features</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* ═══════ Editorial Text Block ═══════ */}
-      <section className="mx-auto max-w-3xl px-6 py-20 md:py-28">
-        <div className="grid gap-10 md:grid-cols-2 md:gap-16">
-          <AnimateIn animation="fade-right" delay={0}>
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-500">
-              The Problem
-            </h2>
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              Setting up an online store used to mean hiring developers,
-              configuring payment gateways, and managing servers. Most small
-              sellers simply couldn&apos;t afford it.
+      {/* ═══════ Problem & Answer Section ═══════ */}
+      <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+          <AnimateIn animation="fade-right" delay={0} className="bg-[#ffffff] dark:bg-[#1c1c1a] p-12 rounded-sm border border-[#e2e3e1] dark:border-[#333330] editorial-card-shadow">
+            <span className="font-serif text-xs uppercase tracking-[0.25em] text-[#775a19] dark:text-[#e9c176] font-semibold mb-3 block">
+              The Challenge
+            </span>
+            <h2 className="font-serif text-3xl font-bold mb-4">Generic E-Commerce Software</h2>
+            <p className="text-sm sm:text-base text-[#5f5e5e] dark:text-[#cec6b5] leading-relaxed font-light">
+              Traditional multi-vendor platforms dilute brand identity with standardized templates, clunky interfaces, and complex overhead that strip the elegance from handcrafted goods.
             </p>
           </AnimateIn>
-          <AnimateIn animation="fade-left" delay={150}>
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-500">
-              Our Answer
-            </h2>
-            <p className="text-lg leading-relaxed text-muted-foreground">
-              MultiCart gives every seller a fully managed storefront inside a
-              shared marketplace. You bring the products — we handle the
-              technology, payments, and discovery.
+
+          <AnimateIn animation="fade-left" delay={150} className="bg-[#ffffff] dark:bg-[#1c1c1a] p-12 rounded-sm border border-[#e2e3e1] dark:border-[#333330] editorial-card-shadow">
+            <span className="font-serif text-xs uppercase tracking-[0.25em] text-[#775a19] dark:text-[#e9c176] font-semibold mb-3 block">
+              The MultiCart Standard
+            </span>
+            <h2 className="font-serif text-3xl font-bold mb-4">Editorial Polish & Complete Autonomy</h2>
+            <p className="text-sm sm:text-base text-[#5f5e5e] dark:text-[#cec6b5] leading-relaxed font-light">
+              We grant every merchant a dedicated storefront styled with high-fashion editorial aesthetics, backed by instant cloud deployment, automated payments, and global edge routing.
             </p>
           </AnimateIn>
         </div>
       </section>
 
-      {/* ═══════ Vertical Timeline ═══════ */}
-      <section className="bg-white py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6">
+      {/* ═══════ Timeline Section ═══════ */}
+      <section className="bg-[#f4f4f2] dark:bg-[#181817] py-24 border-y border-[#e2e3e1] dark:border-[#333330]">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
           <AnimateIn animation="fade-up" className="mb-16 text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+            <span className="text-xs uppercase tracking-[0.25em] text-[#775a19] dark:text-[#e9c176] font-serif font-semibold block mb-2">
+              Evolution of Craft
+            </span>
+            <h2 className="font-serif text-4xl sm:text-5xl font-bold">
               Our Journey
             </h2>
           </AnimateIn>
 
-          <div className="relative">
-            {/* vertical line */}
-            <div className="absolute left-5 top-0 hidden h-full w-px bg-pink-200 md:left-1/2 md:block" />
-
-            <div className="space-y-16">
-              {timeline.map((item, i) => {
-                const Icon = item.icon;
-                const isEven = i % 2 === 0;
-
-                return (
-                  <AnimateIn
-                    key={item.year}
-                    animation="fade-up"
-                    delay={i * 100}
-                    className="relative flex flex-col gap-4 md:flex-row md:items-start"
-                  >
-                    {/* left / right placement */}
-                    <div
-                      className={`hidden md:flex md:w-1/2 ${
-                        isEven
-                          ? "justify-end pr-12 text-right"
-                          : "order-2 justify-start pl-12 text-left"
-                      }`}
-                    >
-                      <div className="max-w-xs">
-                        <span className="mb-1 inline-block rounded-full bg-pink-100 px-3 py-0.5 text-xs font-semibold text-pink-600">
-                          {item.year}
-                        </span>
-                        <h3 className="mt-2 text-lg font-semibold">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+            {timeline.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <AnimateIn
+                  key={item.year}
+                  animation="fade-up"
+                  delay={i * 100}
+                  className="bg-[#ffffff] dark:bg-[#1c1c1a] p-8 rounded-sm border border-[#e2e3e1] dark:border-[#333330] flex flex-col justify-between editorial-card-shadow"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-full bg-[#fed488]/30 dark:bg-[#47360f]/40 flex items-center justify-center mb-6">
+                      <Icon className="size-5 text-[#775a19] dark:text-[#e9c176]" />
                     </div>
-
-                    {/* center dot */}
-                    <div className="absolute left-5 top-0 z-10 hidden size-10 -translate-x-1/2 items-center justify-center rounded-full border-4 border-white bg-pink-500 text-white md:left-1/2 md:flex">
-                      <Icon className="size-4" />
-                    </div>
-
-                    {/* spacer for opposite side */}
-                    <div
-                      className={`hidden md:block md:w-1/2 ${
-                        isEven ? "order-2" : ""
-                      }`}
-                    />
-
-                    {/* mobile layout */}
-                    <div className="flex items-start gap-4 md:hidden">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-pink-500 text-white">
-                        <Icon className="size-4" />
-                      </div>
-                      <div>
-                        <span className="mb-1 inline-block rounded-full bg-pink-100 px-3 py-0.5 text-xs font-semibold text-pink-600">
-                          {item.year}
-                        </span>
-                        <h3 className="mt-2 text-lg font-semibold">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  </AnimateIn>
-                );
-              })}
-            </div>
+                    <span className="text-xs font-serif uppercase tracking-widest text-[#775a19] dark:text-[#e9c176] font-semibold block mb-2">
+                      {item.year}
+                    </span>
+                    <h3 className="font-serif text-xl font-bold mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-[#5f5e5e] dark:text-[#cec6b5] leading-relaxed font-light">
+                      {item.description}
+                    </p>
+                  </div>
+                </AnimateIn>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ═══════ Pull Quote ═══════ */}
-      <section className="bg-[#F4F4F0] py-20 md:py-28">
-        <AnimateIn animation="scale-in">
-        <blockquote className="mx-auto max-w-2xl px-6 text-center">
-          <Users className="mx-auto mb-6 size-10 text-pink-400" />
-          <p className="text-2xl font-medium italic leading-relaxed md:text-3xl">
-            &ldquo;Selling online should be as simple as having a great
-            product.&rdquo;
-          </p>
-          <footer className="mt-6 text-sm text-muted-foreground">
-            — The MultiCart Team
-          </footer>
-        </blockquote>
-        </AnimateIn>
-      </section>
-
-      {/* ═══════ CTA ═══════ */}
-      <section className="bg-black py-20 text-center text-white md:py-28">
-        <AnimateIn className="mx-auto max-w-xl space-y-6 px-6" animation="fade-up">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Start your store today
-          </h2>
-          <p className="text-white/60">
-            Join thousands of sellers who trust MultiCart. It&apos;s free to get
-            started.
-          </p>
-          <div className="flex items-center justify-center gap-4">
-            <Button
-              asChild
-              size="lg"
-              className="rounded-full bg-pink-500 text-white hover:bg-pink-400 transition-colors text-base px-8"
-            >
-              <Link href="/sign-up">Get Started</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="ghost"
-              className="rounded-full border border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white text-base px-8"
-            >
-              <Link href="/contact">Contact Us</Link>
-            </Button>
-          </div>
+      {/* ═══════ Editorial Quote Section ═══════ */}
+      <section className="py-24 max-w-screen-2xl mx-auto px-6 lg:px-12 text-center">
+        <AnimateIn animation="scale-in" className="max-w-3xl mx-auto">
+          <Sparkles className="mx-auto mb-6 size-10 text-[#775a19] dark:text-[#e9c176]" />
+          <blockquote className="font-serif text-3xl sm:text-4xl italic font-normal leading-snug mb-6">
+            &ldquo;Selling digital and physical goods online should feel like walking through a high-end gallery.&rdquo;
+          </blockquote>
+          <span className="font-serif text-xs uppercase tracking-widest text-[#775a19] dark:text-[#e9c176] font-semibold block">
+            — The MultiCart Atelier Team
+          </span>
         </AnimateIn>
       </section>
     </div>
   );
 };
 
-export default Page;
+export default Page;
