@@ -1,15 +1,25 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Noto_Serif, Inter } from "next/font/google";
 import "./globals.css";
-import {NuqsAdapter} from "nuqs/adapters/next/app";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
-const dmSans = DM_Sans({
+
+const notoSerif = Noto_Serif({
   subsets: ["latin"],
+  variable: "--font-noto-serif",
+  weight: ["300", "400", "500", "600", "700"],
 });
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
-  title: "Multi Cart",
-  description: "MultiCart",
+  title: "MultiCart | The Curated Atelier",
+  description: "High-end multi-tenant e-commerce platform curated for contemporary digital ateliers.",
 };
 
 export default function RootLayout({
@@ -18,10 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${dmSans.className} antialiased`}
-      >
+    <html lang="en" className={`${notoSerif.variable} ${inter.variable} scroll-smooth`}>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
+      </head>
+      <body className={`${inter.className} bg-background text-foreground antialiased selection:bg-[#fed488] selection:text-[#785a1a]`}>
         <NuqsAdapter>
           <TRPCReactProvider>
             {children}
@@ -32,3 +46,4 @@ export default function RootLayout({
     </html>
   );
 }
+

@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 const Page = async () => {
     const queryClient = getQueryClient();
-    void queryClient.prefetchInfiniteQuery(trpc.library.getMany.infiniteQueryOptions({
+    await queryClient.prefetchInfiniteQuery(trpc.library.getMany.infiniteQueryOptions({
         limit: DEFAULT_LIMIT,
     }));
     return (

@@ -12,10 +12,10 @@ export const dynamic = "force-dynamic";
 const Page = async ({ params }: Props) => {
     const { productId } = await params;
     const queryClient = getQueryClient();
-    void queryClient.prefetchQuery(trpc.library.getOne.queryOptions({
+    await queryClient.prefetchQuery(trpc.library.getOne.queryOptions({
         productId,
     }));
-    void queryClient.prefetchQuery(trpc.reviews.getOne.queryOptions({
+    await queryClient.prefetchQuery(trpc.reviews.getOne.queryOptions({
         productId,
     }))
     return (
