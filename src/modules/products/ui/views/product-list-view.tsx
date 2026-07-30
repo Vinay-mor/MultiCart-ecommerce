@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Sparkles, Paintbrush, Globe, ShieldCheck, Lock } from "lucide-react";
 import { ProductFilters } from "../components/product-filters";
 import { ProductList, ProductListSkeleton } from "../components/product-list";
@@ -27,23 +28,24 @@ export const ProductListView = ({ category, tenantSlug, narrowView }: Props) => 
     <div className="w-full bg-[#f9f9f7] dark:bg-[#141413] text-[#1a1c1b] dark:text-[#f9f9f7] transition-colors">
       {/* Stitch Hero Section (Displayed on main home page) */}
       {isMainHomePage && (
-        <section className="relative min-h-[640px] lg:min-h-[720px] flex items-center px-6 lg:px-12 py-16 overflow-hidden border-b border-[#e2e3e1] dark:border-[#333330] bg-gradient-to-b from-[#f9f9f7] via-[#f4f4f2] to-[#eeeeec] dark:from-[#141413] dark:via-[#1a1a18] dark:to-[#222220]">
+        <section className="relative min-h-[640px] lg:min-h-[720px] flex items-center px-6 lg:px-12 py-16 overflow-hidden border-b border-border bg-gradient-to-b from-background via-surface-container-low to-surface-container">
           <div className="max-w-screen-2xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="z-10 flex flex-col items-start">
-              <span className="inline-block text-xs uppercase tracking-[0.25em] text-[#775a19] dark:text-[#e9c176] font-semibold mb-6 px-3 py-1 bg-[#fed488]/30 dark:bg-[#47360f]/40 rounded-full border border-[#d1c5b4]/30">
+              <span className="inline-block text-xs uppercase tracking-[0.25em] text-secondary font-semibold mb-6 px-3 py-1 bg-secondary-container/30 dark:bg-secondary-container/40 rounded-full border border-outline-variant/30">
                 The Curated Experience
               </span>
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.1] text-[#1a1c1b] dark:text-[#f9f9f7] font-bold mb-6">
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.1] text-foreground font-bold mb-6">
                 Discover the <br />
-                <span className="italic font-normal text-[#775a19] dark:text-[#e9c176]">
+                <span className="italic font-normal text-secondary">
                   Extraordinary
                 </span>
               </h1>
-              <p className="text-base sm:text-lg text-[#5f5e5e] dark:text-[#cec6b5] max-w-lg mb-10 leading-relaxed font-light">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-lg mb-10 leading-relaxed font-light">
                 Step into a meticulously designed marketplace where every detail is an expression of craft. High-end tools for the modern digital atelier.
               </p>
               <div className="flex flex-wrap gap-4">
                 <button
+                  type="button"
                   onClick={scrollToProducts}
                   className="satin-gradient text-white px-8 py-3.5 rounded-xs font-serif text-xs uppercase tracking-widest font-semibold hover:brightness-110 transition-all editorial-shadow cursor-pointer"
                 >
@@ -51,7 +53,7 @@ export const ProductListView = ({ category, tenantSlug, narrowView }: Props) => 
                 </button>
                 <Link
                   href="/about"
-                  className="bg-[#e8e8e6] dark:bg-[#2a2a28] text-[#1a1c1b] dark:text-[#f9f9f7] px-8 py-3.5 rounded-xs font-serif text-xs uppercase tracking-widest font-semibold hover:bg-[#e2e3e1] dark:hover:bg-[#333330] transition-all"
+                  className="bg-surface-container-high text-foreground px-8 py-3.5 rounded-xs font-serif text-xs uppercase tracking-widest font-semibold hover:bg-surface-container-highest transition-all"
                 >
                   Our Process
                 </Link>
@@ -59,18 +61,22 @@ export const ProductListView = ({ category, tenantSlug, narrowView }: Props) => 
             </div>
 
             <div className="relative">
-              <div className="aspect-[4/5] w-full max-w-md mx-auto rounded-sm overflow-hidden editorial-shadow bg-[#e8e8e6] dark:bg-[#2a2a28] border border-[#d1c5b4]/40">
-                <img
+              <div className="aspect-[4/5] w-full max-w-md mx-auto rounded-sm overflow-hidden editorial-shadow bg-[#e8e8e6] dark:bg-[#2a2a28] border border-[#d1c5b4]/40 relative">
+                <Image
                   alt="Curated atelier collection display"
-                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
                   src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=1000"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover filter grayscale hover:grayscale-0 transition-all duration-700"
                 />
               </div>
               <div className="absolute -bottom-8 -left-6 w-52 h-64 hidden xl:block rounded-sm overflow-hidden editorial-shadow border-8 border-[#f9f9f7] dark:border-[#141413]">
-                <img
+                <Image
                   alt="Architectural detail"
-                  className="w-full h-full object-cover"
                   src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=600"
+                  fill
+                  sizes="208px"
+                  className="object-cover"
                 />
               </div>
             </div>
@@ -142,20 +148,24 @@ export const ProductListView = ({ category, tenantSlug, narrowView }: Props) => 
                   </Link>
                 </div>
                 <div className="flex-1 h-full hidden md:block relative bg-[#eeeeec] dark:bg-[#222220]">
-                  <img
+                  <Image
                     alt="Visual interface showcase"
-                    className="w-full h-full object-cover"
                     src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
                   />
                 </div>
               </div>
 
               {/* Feature 3 */}
               <div className="md:col-span-2 bg-[#141413] text-[#f9f9f7] rounded-sm overflow-hidden editorial-shadow h-[360px] relative group border border-[#333330]">
-                <img
+                <Image
                   alt="Global architecture"
-                  className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 66vw"
+                  className="object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141413] via-transparent to-transparent flex items-end p-10">
                   <div>
